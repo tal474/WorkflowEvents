@@ -1,0 +1,53 @@
+﻿@model WorkflowEvents.Models.UserLogin
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div>
+    <h4>UserLogin</h4>
+    <hr />
+
+    <div class="">
+
+        <div class="form-group">
+
+            <label class="control-label col-md-2" for="FirstName">
+                @Html.DisplayNameFor(model => model.FirstName)
+            </label>
+            <div class="col-md-4">
+                <input class="form-control text-box single-line" id="LoginUserName" name="LoginUserName" placeholder="User Name / Email" type="text" value="@WorkflowEvents.Models.SessionHelper.CurrentUser.FirstName" disabled />
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="LoginPassword">Role Name</label>
+            <div class="col-md-4">
+                <input class="form-control text-box single-line" id="UserRole_Name" name="UserRole_Name" placeholder="Role Name" type="text" 
+                       value="@WorkflowEvents.Models.SessionHelper.CurrentUser.RoleName" disabled />
+
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Login" class="btn btn-default">
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = @WorkflowEvents.Models.SessionHelper.CurrentUser.UserLoginID }) |
+    @Html.ActionLink("Back to List", "Home")
+</p>
+
+
+
+

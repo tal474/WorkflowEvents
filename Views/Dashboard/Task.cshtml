@@ -1,0 +1,137 @@
+﻿@model IEnumerable<WorkflowEvents.Models.ClsTask>
+
+@{
+    ViewBag.Title = "Task";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Task</h2>
+
+<p>
+    @Html.ActionLink("Create New", "TaskCreate")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Task_ID_PK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TaskName)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDated)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.StatusName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Task_ID_PK)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDated)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusName)
+            </td>
+            <td>
+
+                @if (item.StatusName == "Under Review")
+                { }
+                else
+                {
+
+                    Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ });
+                    Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ });
+                    Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ });
+                }
+
+                @if (WorkflowEvents.Models.SessionHelper.CurrentUser.RoleName == "Admin")
+                {
+
+                    <a href="javascript:void(0);" class="anchorDetail" data-Command="Reject" data-id="@item.Task_ID_PK">Reject</a>
+
+                    <input type="submit" id="btnApprove" value="Approve" class="btn btn-default">
+
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+
+<div id='myModal' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        var TeamDetailPostBackURL = '/Dashboard/Details';
+        $(function () {
+            $(".anchorDetail").click(function () {
+                debugger;
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var Ec = $buttonClicked.attr('data-Command');
+                $('#myModal').modal('show');
+                var options = { "backdrop": "static", keyboard: true };
+                //$.ajax({
+                //    type: "GET",
+                //    url: TeamDetailPostBackURL,
+                //    contentType: "application/json; charset=utf-8",
+                //    data: { "Id": id },
+                //    datatype: "json",
+                //    success: function (data) {
+                //        debugger;
+                //        $('#myModalContent').html(data);
+                //        $('#myModal').modal(options);
+                //        $('#myModal').modal('show');
+
+                //    },
+                //    error: function () {
+                //        alert("Dynamic content load failed.");
+                //    }
+                //});
+            });
+            //$("#closebtn").on('click',function(){
+            //    $('#myModal').modal('hide');
+
+            $("#closbtn").click(function () {
+                $('#myModal').modal('hide');
+            });
+        });
+
+    </script>
+
+}
+
